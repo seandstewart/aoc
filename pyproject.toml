@@ -1,0 +1,103 @@
+[tool.poetry]
+name = "aoc"
+version = "0.1.0"
+description = ""
+authors = ["Sean Stewart <sean_stewart@me.com>"]
+readme = "README.md"
+packages = [
+    {include = "aoc", from = "src"},
+]
+repository = "https://github.com/seandstewart/aoc"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8"
+pytest-parametrize-suite = "^23"
+pre-commit = "^4"
+pytest-cov = "^6.0.0"
+
+[tool.coverage.run]
+branch = true
+data_file = "coverage.db"
+include = [
+    "src/**/*",
+]
+
+[tool.coverage.paths]
+source = [
+    "src/*",
+]
+
+[tool.coverage.report]
+skip_empty = true
+sort = "Cover"
+exclude_also = [
+    # Don't complain about missing debug-only code:
+    "def __repr__",
+    "def __str__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    # Don't complain if tests don't hit defensive assertion code:
+    "raise AssertionError",
+    "raise NotImplementedError",
+    # Don't complain if non-runnable code isn't run:
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "if (typing\\.)?TYPE_CHECKING:",
+    "class\\s\\w+\\((typing\\.)?Protocol(\\[.*\\])?\\):",
+    "@(abc\\.)?abstractmethod",
+    "@(typing\\.)?overload",
+    ".*\\.\\.\\."
+]
+omit = [
+    "dist/*",
+    "tests/*",
+    "docs/*",
+    ".venv/*",
+    "benchmark/*",
+]
+
+
+[tool.ruff.lint]
+extend-select = [
+    # Bugbear
+    "B",
+    # McCabe Complexity
+    "C9",
+    # isort
+    "I",
+    # flake8-simplify
+    "SIM",
+    # Future annotation
+    "FA"
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Ignore `E402` (import violations) in all `__init__.py` files
+"__init__.py" = ["E402", "F403"]
+
+[tool.ruff.lint.isort]
+known-local-folder = ["tests"]
+extra-standard-library = ["typing_extensions", "graphlib"]
+
+[tool.mypy]
+mypy_path = "$MYPY_CONFIG_FILE_DIR/src/"
+no_namespace_packages = true
+python_version = "3.12"
+ignore_missing_imports = true
+no_strict_optional = true
+follow_imports = "silent"
+exclude = ".*tests/.*|.*docs/.*"
+
+[tool.git-changelog]
+convention = "conventional"
+in-place = true
+output = "docs/changelog.md"
+parse-refs = true
+parse-trailers = true
+
+[build-system]
+requires = ["poetry-core>=1.8.0"]
+build-backend = "poetry.core.masonry.api"
