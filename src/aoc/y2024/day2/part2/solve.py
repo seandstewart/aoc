@@ -42,21 +42,5 @@ def _issafe_inner(row: c.Sequence[int]) -> bool:
     return all(op(a, b) and 0 < abs(a - b) < 4 for a, b in itertools.pairwise(row))
 
 
-def dampener(row: c.Sequence[int]) -> c.Iterable[bool]:
-    op = operator.lt
-    if row[0] > row[1]:
-        op = operator.gt
-
-    dampened = False
-    a = row[0]
-    for b in row[1:]:
-        safe = op(a, b) and 0 < abs(a - b) < 4
-        if not safe and not dampened:
-            dampened = True
-            continue
-        a = b
-        yield safe
-
-
 if __name__ == "__main__":
     print(solve(INPUT))
