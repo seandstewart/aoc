@@ -1,12 +1,16 @@
 #!/usr/bin/env python
 from __future__ import annotations
 
+import pathlib
 
-def parse(): ...
+INPUT = pathlib.Path(__file__).parent / "input"
 
 
-def solve(): ...
+def parse(pth: pathlib.Path): ...
+
+
+def solve(pth: pathlib.Path): ...
 
 
 if __name__ == "__main__":
-    print(solve())
+    print(solve(INPUT))
